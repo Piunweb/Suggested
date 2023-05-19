@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body{
+            background-color: rgb(174, 220, 250);
+        }
+        #main{
+            position: relative;
+        }
+        #time{
+            flex-wrap: wrap;
+        }
+        article{
+            position: relative;
+            height: 350px;
+            background-color: white;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        #about{
+            position: absolute;
+            top:80px;
+            /* width: 600px; */
+            height: 400px;
+            left: 400px;
+            border: 1px solid black;
+            margin: 100px auto;
+            display:  flex;
+            opacity: 0;
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+            font-size: 20px;
+            box-shadow: 3px 3px 5px 6px rgba(71, 38, 66, 0.425);
+            transition: 0.4s;
+            border-radius: 5px;
+        }
+        #about>span{
+            width: 30px;
+            height: 30px;
+            top: 10px;
+            right: 5px;
+            position: absolute;
+            color: rgb(0, 0, 0);
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+        }
+        button:nth-of-type(1){
+        position: absolute;
+        bottom: 30px;
+        left: 40px;
+        width: 120px;
+        height: 30px;
+        border: 1px solid blue;
+        color: blue;
+        background-color: white;
+        border-radius: 7px;
+        font-size: 15px;
+        }
+        button:nth-of-type(2){
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        width: 80px;
+        height: 30px;
+        font-size: 15px;
+        border: 1px solid rgb(43, 134, 253);
+        background-color: rgb(43, 134, 253);
+        color: white;
+        border-radius: 7px;
+        }
+        .last{
+            position: absolute;
+            bottom: 70px;
+            left: 40px;
+        }
+        button:nth-of-type(2):hover{
+            background-color:  rgb(25, 103, 204);
+        }
+        button:nth-of-type(1):hover{
+           border: 2px solid blue;
+        }
+        img{
+            width: 200px;
+            height: 200px;
+            border: 1px solid black;
+            margin-top: 10px;
+        }
+        .name{
+            color: rgb(54, 54, 54);
+            font-size: 17px;
+        }
+        .wel{
+            width: 100%;
+            color: rgb(2, 2, 158);
+            font-weight: bold;
+            border-bottom:1px solid rgb(143, 141, 141) ;
+        }
+    </style>
+</head>
+<body>
+    <main class="container" id="main">
+        <div class="row justify-content-center">
+            <div class="col-12 d-flex justify-content-center align-item-center" id="time">
+                <div class="col-12 container-fluid d-flex justify-content-center align-item-center wel my-2">
+                    <h2>Suggested For You</h2>
+                </div>
+ 
+        </div>
+        </div>
+        <div class="row p-3" id="about" tabindex="0">
+            <span class="del d-flex justify-content-center align-item-center" onclick="_del(this)">x</span>
+            <div id="about1"></div>
+            </div>
+    </main>
+    <script>
+        let x= prompt('Enter num to see People you may know!')
+        fetch('https://randomuser.me/api/?results=' + x)
+        .then(piu => piu.json())
+        .then(mydata => {
+            mydata.results.map(function(val, index){
+                let _art=document.createElement('article')
+                _art.classList.add('col-3', 'my-2', 'p-2')
+                _art.innerHTML=`
+             
+                <figure class='d-flex justify-content-center align-item-center'">
+                <img src="${val.picture.large}" alt="">
+                </figure>
+                <section class='ml-5 d-flex justify-content-start  align-item-center last'>
+                    <h5 class='name ml-5'>${'Name : ' + val.name.first + '<br>' + 'Lastname : ' +  val.name.last}</h5>
+                </section>
+                <div class='col-12'>
+                <button class='col-6' onclick='getpass(" ${'name :' + val.name.first + '<hr>' + 'lastname:' + val.name.last + '<hr>' + 'password :' + val.login.password + '<hr>' + 'location : ' + val.location.street.name + '<hr>' + 'email :' + val.email + '<hr>' + 'username :' + val.login.username}")'>get information</button>
+                <button class='col-6'>follow</button>
+                </div>
+                `
+                document.getElementById('time').appendChild(_art)
+            })
+
+        })
+        function getpass(val){
+            document.getElementById('about').focus()
+            document.getElementById('about').style.opacity='1'
+            // document.getElementsByClassName('del')[0].style.display='flex'
+           document.getElementById('about1').innerHTML=val
+          
+
+          
+        }
+        function _del(self){
+            // self.parentElement.remove()
+            document.getElementById('about').style.opacity='0'
+            // getpass(val)
+        }
+    </script>
+
+</article>
+</body>
+</html>
+<!-- <h3>${val.location.name}</h3>
+                    <h3>${val.email}</h3>
+                    <h3 >${val.login.username}</h3> -->
